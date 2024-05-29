@@ -22,3 +22,6 @@ dependencyResolutionManagement {
 rootProject.name = "aurum"
 include(":app")
 include(":core:designsystem")
+include(":core:datastore")
+include(":core:data")
+include(":core:network")
