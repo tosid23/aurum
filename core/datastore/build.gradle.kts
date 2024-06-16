@@ -58,8 +58,6 @@ dependencies {
 
     implementation(libs.hilt)
     ksp(libs.hilt.compiler)
-    implementation(libs.hilt.lifecycle.viewmodel)
-    ksp(libs.hilt.lifecycle.viewmodel.compiler)
 
     implementation(libs.kotlin.coroutines)
 
