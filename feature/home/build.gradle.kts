@@ -40,6 +40,11 @@ android {
 
 dependencies {
 
+    implementation(project(":core:designsystem"))
+    implementation(project(":core:network"))
+    implementation(project(":core:data"))
+    implementation(project(":core:datastore"))
+
     implementation(libs.androidx.core.ktx)
     implementation(libs.androidx.appcompat)
     implementation(libs.material)
@@ -51,12 +56,12 @@ dependencies {
     implementation(libs.androidx.ui.graphics)
     implementation(libs.androidx.ui.tooling.preview)
     implementation(libs.androidx.material3)
+    implementation(libs.timber)
 
     implementation(libs.hilt)
     implementation(libs.hilt.navigation.compose)
     implementation(libs.androidx.navigation.common.ktx)
     implementation(libs.androidx.navigation.compose)
-    implementation(project(":core:designsystem"))
     ksp(libs.hilt.compiler)
 
     implementation(libs.kotlin.coroutines)
