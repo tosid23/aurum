@@ -53,6 +53,7 @@ dependencies {
     implementation(libs.androidx.material3)
 
     implementation(libs.hilt)
+    implementation(libs.hilt.navigation.compose)
     implementation(libs.androidx.navigation.common.ktx)
     implementation(libs.androidx.navigation.compose)
     implementation(project(":core:designsystem"))

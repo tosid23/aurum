@@ -1,22 +1,35 @@
-package com.fantasy.feature.home
+package com.fantasy.feature.home.ui
 
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
+import androidx.compose.material3.CenterAlignedTopAppBar
+import androidx.compose.material3.ExperimentalMaterial3Api
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
+import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import com.fantasy.designsystem.theme.md_white_1000
+import com.fantasy.feature.home.domain.HomeViewModel
+import androidx.hilt.navigation.compose.hiltViewModel
 
+
+@OptIn(ExperimentalMaterial3Api::class)
 @Composable
-internal fun HomeScreen() {
+internal fun HomeScreen(
+    viewModel: HomeViewModel = hiltViewModel()
+) {
     Scaffold(
-        containerColor = md_white_1000,
+        containerColor = MaterialTheme.colorScheme.primaryContainer,
         topBar = {
-
+            CenterAlignedTopAppBar(
+                title = { Text(text = "Aurum") },
+                colors = TopAppBarDefaults.topAppBarColors()
+                    .copy(containerColor = MaterialTheme.colorScheme.primaryContainer)
+            )
         },
         floatingActionButton = {
 
@@ -29,7 +42,7 @@ internal fun HomeScreen() {
             horizontalAlignment = Alignment.CenterHorizontally,
             verticalArrangement = Arrangement.Top
         ) {
-            Text(text = "Hello")
+
         }
     }
 }
