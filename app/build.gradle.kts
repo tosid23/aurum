@@ -52,6 +52,7 @@ android {
 dependencies {
 
     implementation(project(":core:designsystem"))
+    implementation(project(":feature:home"))
     implementation(libs.androidx.core.ktx)
     implementation(libs.androidx.lifecycle.runtime.ktx)
     implementation(libs.androidx.activity.compose)
@@ -62,6 +63,7 @@ dependencies {
     implementation(libs.androidx.material3)
 
     implementation(libs.hilt)
+    implementation(libs.androidx.navigation.compose)
     ksp(libs.hilt.compiler)
 
     implementation(libs.kotlin.coroutines)

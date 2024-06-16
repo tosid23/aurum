@@ -53,6 +53,9 @@ dependencies {
     implementation(libs.androidx.material3)
 
     implementation(libs.hilt)
+    implementation(libs.androidx.navigation.common.ktx)
+    implementation(libs.androidx.navigation.compose)
+    implementation(project(":core:designsystem"))
     ksp(libs.hilt.compiler)
 
     implementation(libs.kotlin.coroutines)
