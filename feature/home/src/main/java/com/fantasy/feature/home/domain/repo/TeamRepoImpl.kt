@@ -11,7 +11,6 @@ internal class TeamRepoImpl @Inject constructor(
     private val apiService: ApiService
 ) : TeamRepo {
     override suspend fun getTeamData(teamId: Long): Result<TeamData> {
-        Timber.e("Here 1")
         return enqueueRoutine { apiService.getYourTeamData(teamId) }
     }
 }
