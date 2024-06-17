@@ -21,21 +21,27 @@ retrofit = "2.11.0"
 retrofit_adapter = "0.9.2"
 retrofitInterceptor = "5.0.0-alpha.14"
 hilt = "2.51.1"
-hiltNavigationCompose = "1.2.0"
+hiltCommon = "1.2.0"
 room = "2.6.1"
 navigationCompose = "2.7.7"
 navigationCommonKtx = "2.7.7"
 timber = "5.0.1"
-
+lottie = "6.4.0"
+work = "2.9.0"
+coil = "2.6.0"
 
 [libraries]
 androidx-core-ktx = { group = "androidx.core", name = "core-ktx", version.ref = "coreKtx" }
+androidx-appcompat = { group = "androidx.appcompat", name = "appcompat", version.ref = "appcompat" }
 androidx-espresso-core = { group = "androidx.test.espresso", name = "espresso-core", version.ref = "espressoCore" }
 androidx-junit = { group = "androidx.test.ext", name = "junit", version.ref = "junitVersion" }
 androidx-lifecycle-runtime-ktx = { group = "androidx.lifecycle", name = "lifecycle-runtime-ktx", version.ref = "lifecycleRuntimeKtx" }
+androidx-lifecycle-runtime-compose = { group = "androidx.lifecycle", name = "lifecycle-runtime-compose", version.ref = "lifecycleRuntimeKtx" }
 androidx-activity-compose = { group = "androidx.activity", name = "activity-compose", version.ref = "activityCompose" }
 androidx-compose-bom = { group = "androidx.compose", name = "compose-bom", version.ref = "composeBom" }
-androidx-appcompat = { group = "androidx.appcompat", name = "appcompat", version.ref = "appcompat" }
+androidx-livedata = { module = "androidx.compose.runtime:runtime-livedata" }
+androidx-icons-core = { module = "androidx.compose.material:material-icons-core" }
+androidx-icons-extended = { module = "androidx.compose.material:material-icons-extended" }
 androidx-material3 = { group = "androidx.compose.material3", name = "material3" }
 androidx-ui = { group = "androidx.compose.ui", name = "ui" }
 androidx-ui-graphics = { group = "androidx.compose.ui", name = "ui-graphics" }
@@ -43,6 +49,10 @@ androidx-ui-tooling = { group = "androidx.compose.ui", name = "ui-tooling" }
 androidx-ui-tooling-preview = { group = "androidx.compose.ui", name = "ui-tooling-preview" }
 androidx-ui-test-junit4 = { group = "androidx.compose.ui", name = "ui-test-junit4" }
 androidx-ui-test-manifest = { group = "androidx.compose.ui", name = "ui-test-manifest" }
+
+androidx-navigation-compose = { group = "androidx.navigation", name = "navigation-compose", version.ref = "navigationCompose" }
+androidx-navigation-common-ktx = { group = "androidx.navigation", name = "navigation-common-ktx", version.ref = "navigationCommonKtx" }
+
 junit = { group = "junit", name = "junit", version.ref = "junit" }
 material = { group = "com.google.android.material", name = "material", version.ref = "material" }
 
@@ -61,10 +71,18 @@ retrofit-interceptor = { group = "com.squareup.okhttp3", name = "logging-interce
 
 hilt = { group = "com.google.dagger", name = "hilt-android", version.ref = "hilt" }
 hilt-compiler = { group = "com.google.dagger", name = "hilt-android-compiler", version.ref = "hilt" }
-hilt-navigation-compose = { group = "androidx.hilt", name = "hilt-navigation-compose", version.ref = "hiltNavigationCompose" }
-androidx-navigation-compose = { group = "androidx.navigation", name = "navigation-compose", version.ref = "navigationCompose" }
-androidx-navigation-common-ktx = { group = "androidx.navigation", name = "navigation-common-ktx", version.ref = "navigationCommonKtx" }
+hilt-navigation-compose = { group = "androidx.hilt", name = "hilt-navigation-compose", version.ref = "hiltCommon" }
+hilt-work = { group = "androidx.hilt", name = "hilt-work", version.ref = "hiltCommon" }
+
 timber = { group = "com.jakewharton.timber", name = "timber", version.ref = "timber" }
+
+lottie_compose = { module = "com.airbnb.android:lottie-compose", version.ref = "lottie" }
+
+work_runtime = { module = "androidx.work:work-runtime", version.ref = "work" }
+work_runtime_ktx = { module = "androidx.work:work-runtime-ktx", version.ref = "work" }
+
+coil_compose = { module = "io.coil-kt:coil-compose", version.ref = "coil" }
+coil_gif = { module = "io.coil-kt:coil-gif", version.ref = "coil" }
 
 [plugins]
 android-application = { id = "com.android.application", version.ref = "agp" }

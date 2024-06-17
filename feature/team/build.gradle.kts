@@ -7,7 +7,7 @@ plugins {
 }
 
 android {
-    namespace = "com.fantasy.datastore"
+    namespace = "com.fantasy.feature.home"
     compileSdk = libs.versions.compile.sdk.get().toInt()
 
     defaultConfig {
@@ -40,37 +40,39 @@ android {
 
 dependencies {
 
+    implementation(project(":core:designsystem"))
+    implementation(project(":core:network"))
     implementation(project(":core:data"))
+    implementation(project(":core:datastore"))
+
     implementation(libs.androidx.core.ktx)
     implementation(libs.androidx.appcompat)
     implementation(libs.material)
     implementation(libs.androidx.core.ktx)
     implementation(libs.androidx.lifecycle.runtime.ktx)
+    implementation(libs.androidx.lifecycle.runtime.compose)
     implementation(libs.androidx.activity.compose)
     implementation(platform(libs.androidx.compose.bom))
+    implementation(libs.androidx.livedata)
+    implementation(libs.androidx.icons.core)
+    implementation(libs.androidx.icons.extended)
     implementation(libs.androidx.ui)
     implementation(libs.androidx.ui.graphics)
     implementation(libs.androidx.ui.tooling.preview)
     implementation(libs.androidx.material3)
-    implementation(libs.gson)
-
-    implementation(libs.room)
-    implementation(libs.room.ktx)
-    annotationProcessor(libs.room.compiler)
-    ksp(libs.room.compiler)
-
-    implementation(libs.lottie.compose)
-
-    implementation(libs.hilt.work)
-    implementation(libs.coil.compose)
-    implementation(libs.coil.gif)
+    implementation(libs.timber)
 
     implementation(libs.hilt)
+    implementation(libs.hilt.navigation.compose)
+    implementation(libs.androidx.navigation.common.ktx)
+    implementation(libs.androidx.navigation.compose)
     ksp(libs.hilt.compiler)
-    implementation(libs.timber)
 
     implementation(libs.kotlin.coroutines)
 
+    implementation(libs.retrofit)
+    implementation(libs.retrofit.converter.gson)
+    implementation(libs.retrofit.kotlin.coroutines.adapter)
 
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.junit)

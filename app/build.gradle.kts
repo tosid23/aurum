@@ -52,7 +52,7 @@ android {
 dependencies {
 
     implementation(project(":core:designsystem"))
-    implementation(project(":feature:home"))
+    implementation(project(":feature:team"))
     implementation(libs.androidx.core.ktx)
     implementation(libs.androidx.lifecycle.runtime.ktx)
     implementation(libs.androidx.activity.compose)
@@ -62,6 +62,8 @@ dependencies {
     implementation(libs.androidx.ui.tooling.preview)
     implementation(libs.androidx.material3)
     implementation(libs.timber)
+    implementation(libs.work.runtime)
+    implementation(libs.work.runtime.ktx)
 
     implementation(libs.hilt)
     implementation(libs.androidx.navigation.compose)
