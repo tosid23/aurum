@@ -22,6 +22,8 @@ internal class TeamViewModel @Inject constructor(
         private set
 
     //private val teamId: Long = 1983972
+    //Photos
+    //https://resources.premierleague.com/premierleague/photos/players/250x250/p226597.png
 
     init {
         getGeneralData()

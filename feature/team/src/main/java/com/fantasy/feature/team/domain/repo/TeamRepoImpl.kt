@@ -1,9 +1,11 @@
 package com.fantasy.feature.team.domain.repo
 
-import com.fantasy.data.FplTeamInfoEntity
-import com.fantasy.data.toTeamEntity
+import com.fantasy.data.team.TeamInfoEntity
+import com.fantasy.data.team.toTeamEntity
 import com.fantasy.datastore.dao.ElementDao
-import com.fantasy.datastore.dao.FplTeamDao
+import com.fantasy.datastore.dao.ElementTypeDao
+import com.fantasy.datastore.dao.TeamDao
+import com.fantasy.datastore.dao.ClubDao
 import com.fantasy.network.ApiService
 import com.fantasy.network.Result
 import com.fantasy.network.enqueueRoutine
@@ -11,8 +13,10 @@ import javax.inject.Inject
 
 internal class TeamRepoImpl @Inject constructor(
     private val apiService: ApiService,
-    private val fplTeamDao: FplTeamDao,
-    private val elementDao: ElementDao
+    private val teamDao: TeamDao,
+    private val elementDao: ElementDao,
+    private val clubDao: ClubDao,
+    private val elementTypeDao: ElementTypeDao
 ) : TeamRepo {
     override suspend fun isGeneralFplDataLoaded(): Boolean {
         return elementDao.getCount() > 0
@@ -23,20 +27,20 @@ internal class TeamRepoImpl @Inject constructor(
             is Result.Error -> false
             is Result.Success -> {
                 val allData = data.data
-                allData.elements.let {
-                    elementDao.insertListData(it)
-                }
+                elementDao.insertListData(allData.elements)
+                elementTypeDao.insertListData(allData.elementTypes)
+                clubDao.insertListData(allData.teams)
                 true
             }
         }
     }
 
-    override suspend fun getFirstTeamFromDb(): FplTeamInfoEntity? {
-        val teams = fplTeamDao.getAllTeams()
+    override suspend fun getFirstTeamFromDb(): TeamInfoEntity? {
+        val teams = teamDao.getAllTeams()
         return teams?.firstOrNull()
     }
 
-    override suspend fun getTeamDataFromApi(teamId: Long): FplTeamInfoEntity? {
+    override suspend fun getTeamDataFromApi(teamId: Long): TeamInfoEntity? {
         when (val data = enqueueRoutine { apiService.getTeamBasicInfoById(teamId) }) {
             is Result.Error -> return null
 

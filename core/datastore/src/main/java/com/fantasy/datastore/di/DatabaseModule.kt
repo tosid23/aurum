@@ -4,7 +4,9 @@ import android.content.Context
 import androidx.room.Room
 import com.fantasy.datastore.AurumDb
 import com.fantasy.datastore.dao.ElementDao
-import com.fantasy.datastore.dao.FplTeamDao
+import com.fantasy.datastore.dao.ElementTypeDao
+import com.fantasy.datastore.dao.TeamDao
+import com.fantasy.datastore.dao.ClubDao
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -16,10 +18,16 @@ import javax.inject.Singleton
 @InstallIn(SingletonComponent::class)
 class DatabaseModule {
     @Provides
-    fun provideFplTeamDao(appDatabase: AurumDb): FplTeamDao = appDatabase.fplTeamDao()
+    fun provideFplTeamDao(appDatabase: AurumDb): TeamDao = appDatabase.fplTeamDao()
 
     @Provides
     fun provideElementDao(appDatabase: AurumDb): ElementDao = appDatabase.elementDao()
+
+    @Provides
+    fun provideTeamDao(appDatabase: AurumDb): ClubDao = appDatabase.teamDao()
+
+    @Provides
+    fun provideElementTypeDao(appDatabase: AurumDb): ElementTypeDao = appDatabase.elementTypeDao()
 
     @Provides
     @Singleton

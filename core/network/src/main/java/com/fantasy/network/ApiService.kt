@@ -1,8 +1,8 @@
 package com.fantasy.network
 
-import com.fantasy.data.AllFplData
-import com.fantasy.data.FplTeamInfoData
-import com.fantasy.data.FplTeamPicksData
+import com.fantasy.data.all.AllFplData
+import com.fantasy.data.team.TeamInfoData
+import com.fantasy.data.team.TeamPicksData
 import retrofit2.http.GET
 import retrofit2.http.Path
 
@@ -14,10 +14,10 @@ interface ApiService {
     @GET("entry/{team_id}/")
     suspend fun getTeamBasicInfoById(
         @Path("team_id") teamId: Long,
-    ): FplTeamInfoData
+    ): TeamInfoData
 
     @GET("my-team/{team_id}/")
     suspend fun getTeamElementsInfoById(
         @Path("team_id") teamId: Long,
-    ): FplTeamPicksData
+    ): TeamPicksData
 }

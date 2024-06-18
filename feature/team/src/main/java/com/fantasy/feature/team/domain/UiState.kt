@@ -1,6 +1,6 @@
 package com.fantasy.feature.team.domain
 
-import com.fantasy.data.FplTeamInfoEntity
+import com.fantasy.data.team.TeamInfoEntity
 
 internal sealed class UiState {
     internal data object Empty : UiState()
@@ -9,5 +9,5 @@ internal sealed class UiState {
 
     internal data object AddTeam : UiState()
 
-    internal data class ShowTeam(val team: FplTeamInfoEntity) : UiState()
+    internal data class ShowTeam(val team: TeamInfoEntity) : UiState()
 }

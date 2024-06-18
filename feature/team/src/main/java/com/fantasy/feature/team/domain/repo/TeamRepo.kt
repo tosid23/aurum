@@ -1,6 +1,6 @@
 package com.fantasy.feature.team.domain.repo
 
-import com.fantasy.data.FplTeamInfoEntity
+import com.fantasy.data.team.TeamInfoEntity
 
 interface TeamRepo {
 
@@ -8,7 +8,7 @@ interface TeamRepo {
 
     suspend fun getAllFplDataFromApi(): Boolean?
 
-    suspend fun getFirstTeamFromDb(): FplTeamInfoEntity?
+    suspend fun getFirstTeamFromDb(): TeamInfoEntity?
 
-    suspend fun getTeamDataFromApi(teamId: Long): FplTeamInfoEntity?
+    suspend fun getTeamDataFromApi(teamId: Long): TeamInfoEntity?
 }

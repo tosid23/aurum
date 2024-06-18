@@ -1,18 +1,18 @@
-package com.fantasy.data
+package com.fantasy.data.team
 
 
 import androidx.annotation.Keep
 import com.google.gson.annotations.SerializedName
 
 @Keep
-data class FplTeamPicksData(
+data class TeamPicksData(
     @SerializedName("chips") val chips: List<Any>,
-    @SerializedName("picks") val picks: List<FplTeamPlayers>,
+    @SerializedName("picks") val picks: List<TeamPlayers>,
     @SerializedName("transfers") val transfers: Transfers
 )
 
 @Keep
-data class FplTeamPlayers(
+data class TeamPlayers(
     @SerializedName("element") val element: Int,
     @SerializedName("is_captain") val isCaptain: Boolean,
     @SerializedName("is_vice_captain") val isViceCaptain: Boolean,

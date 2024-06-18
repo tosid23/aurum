@@ -1,12 +1,12 @@
-package com.fantasy.data
+package com.fantasy.data.team
 
 import androidx.room.Entity
 import androidx.room.PrimaryKey
 
 @Entity(
-    tableName = "fpl_team_info_table"
+    tableName = "team_info_table"
 )
-data class FplTeamInfoEntity(
+data class TeamInfoEntity(
     @PrimaryKey val id: Long,
     val firstName: String,
     val lastName: String,
@@ -20,7 +20,7 @@ data class FplTeamInfoEntity(
     val lastDataUpdated: Long,
 )
 
-fun FplTeamInfoData.toTeamEntity() = FplTeamInfoEntity(
+fun TeamInfoData.toTeamEntity() = TeamInfoEntity(
     id = id.toLong(),
     firstName = playerFirstName,
     lastName = playerLastName,

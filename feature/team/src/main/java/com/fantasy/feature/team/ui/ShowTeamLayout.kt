@@ -14,12 +14,12 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import com.fantasy.data.FplTeamInfoEntity
+import com.fantasy.data.team.TeamInfoEntity
 import com.fantasy.designsystem.theme.theme.md_grey_300
 import com.fantasy.designsystem.theme.theme.md_grey_800
 
 @Composable
-internal fun ShowTeamLayout(fplTeamInfoEntity: FplTeamInfoEntity) {
+internal fun ShowTeamLayout(teamInfoEntity: TeamInfoEntity) {
     Column(
         modifier = Modifier.fillMaxWidth(),
         verticalArrangement = Arrangement.spacedBy(8.dp),
@@ -31,10 +31,10 @@ internal fun ShowTeamLayout(fplTeamInfoEntity: FplTeamInfoEntity) {
             horizontalArrangement = Arrangement.SpaceEvenly
         ) {
             Box(modifier = Modifier.weight(1f)) {
-                CurrentPointsLayout(fplTeamInfoEntity)
+                CurrentPointsLayout(teamInfoEntity)
             }
             Box(modifier = Modifier.weight(1f)) {
-                TotalPointsLayout(fplTeamInfoEntity)
+                TotalPointsLayout(teamInfoEntity)
             }
         }
 
@@ -42,7 +42,7 @@ internal fun ShowTeamLayout(fplTeamInfoEntity: FplTeamInfoEntity) {
 }
 
 @Composable
-internal fun CurrentPointsLayout(fplTeamInfoEntity: FplTeamInfoEntity) {
+internal fun CurrentPointsLayout(teamInfoEntity: TeamInfoEntity) {
     ElevatedCard(
         modifier = Modifier
             .fillMaxWidth()
@@ -58,9 +58,9 @@ internal fun CurrentPointsLayout(fplTeamInfoEntity: FplTeamInfoEntity) {
             horizontalAlignment = Alignment.CenterHorizontally,
             verticalArrangement = Arrangement.Top
         ) {
-            Text(text = "Gameweek ${fplTeamInfoEntity.currentEvent}", fontSize = 12.sp)
+            Text(text = "Gameweek ${teamInfoEntity.currentEvent}", fontSize = 12.sp)
             Text(
-                text = fplTeamInfoEntity.currentEventPoints.toString(),
+                text = teamInfoEntity.currentEventPoints.toString(),
                 fontSize = 48.sp
             )
             Text(
@@ -72,7 +72,7 @@ internal fun CurrentPointsLayout(fplTeamInfoEntity: FplTeamInfoEntity) {
 }
 
 @Composable
-internal fun TotalPointsLayout(fplTeamInfoEntity: FplTeamInfoEntity) {
+internal fun TotalPointsLayout(teamInfoEntity: TeamInfoEntity) {
     ElevatedCard(
         modifier = Modifier
             .fillMaxWidth()
@@ -90,11 +90,11 @@ internal fun TotalPointsLayout(fplTeamInfoEntity: FplTeamInfoEntity) {
         ) {
             Text(text = "Total", fontSize = 12.sp)
             Text(
-                text = fplTeamInfoEntity.overallPoints.toString(),
+                text = teamInfoEntity.overallPoints.toString(),
                 fontSize = 48.sp
             )
             Text(
-                text = "Overall Rank ${fplTeamInfoEntity.overallRank}",
+                text = "Overall Rank ${teamInfoEntity.overallRank}",
                 fontSize = 12.sp
             )
         }
