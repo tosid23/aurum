@@ -3,7 +3,8 @@ package com.fantasy.datastore.di
 import android.content.Context
 import androidx.room.Room
 import com.fantasy.datastore.AurumDb
-import com.fantasy.datastore.data.TeamDao
+import com.fantasy.datastore.dao.ElementDao
+import com.fantasy.datastore.dao.FplTeamDao
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -15,7 +16,10 @@ import javax.inject.Singleton
 @InstallIn(SingletonComponent::class)
 class DatabaseModule {
     @Provides
-    fun provideTripsDao(appDatabase: AurumDb): TeamDao = appDatabase.teamDao()
+    fun provideFplTeamDao(appDatabase: AurumDb): FplTeamDao = appDatabase.fplTeamDao()
+
+    @Provides
+    fun provideElementDao(appDatabase: AurumDb): ElementDao = appDatabase.elementDao()
 
     @Provides
     @Singleton

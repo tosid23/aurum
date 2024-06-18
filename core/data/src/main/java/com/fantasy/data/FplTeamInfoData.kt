@@ -1,11 +1,11 @@
-package com.fantasy.data.model
+package com.fantasy.data
 
 
 import androidx.annotation.Keep
 import com.google.gson.annotations.SerializedName
 
 @Keep
-data class TeamData(
+data class FplTeamInfoData(
     @SerializedName("current_event") val currentEvent: Int,
     @SerializedName("favourite_team") val favouriteTeam: Int,
     @SerializedName("id") val id: Int,

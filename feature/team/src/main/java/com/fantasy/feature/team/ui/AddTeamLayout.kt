@@ -26,10 +26,10 @@ import androidx.compose.ui.platform.LocalSoftwareKeyboardController
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
-import com.fantasy.designsystem.theme.md_grey_300
-import com.fantasy.designsystem.theme.md_grey_700
-import com.fantasy.designsystem.theme.md_grey_900
-import com.fantasy.designsystem.theme.md_white_1000
+import com.fantasy.designsystem.theme.theme.md_grey_300
+import com.fantasy.designsystem.theme.theme.md_grey_700
+import com.fantasy.designsystem.theme.theme.md_grey_800
+import com.fantasy.designsystem.theme.theme.md_white_1000
 import com.fantasy.feature.team.domain.TeamViewModel
 
 @Composable
@@ -39,7 +39,7 @@ internal fun AddTeamLayout(vm: TeamViewModel) {
             .fillMaxWidth()
             .padding(16.dp, 8.dp),
         colors = CardDefaults.cardColors()
-            .copy(containerColor = md_grey_900, contentColor = md_grey_300),
+            .copy(containerColor = md_grey_800, contentColor = md_grey_300),
         onClick = { }
     ) {
         Column(
@@ -56,13 +56,11 @@ internal fun AddTeamLayout(vm: TeamViewModel) {
             EnterTeamIdLayout {
                 teamId = it
             }
-            if (teamId > 0) {
-                Button(onClick = {
-                    keyboardController?.hide()
-                    vm.getTeamDataFromApi(teamId)
-                }) {
-                    Text(text = "Go")
-                }
+            Button(onClick = {
+                keyboardController?.hide()
+                vm.getTeamDataFromApi(teamId)
+            }) {
+                Text(text = "Go")
             }
         }
     }
@@ -90,7 +88,11 @@ private fun EnterTeamIdLayout(teamId: (Long) -> Unit) {
         label = { Text("Enter Team ID") },
         onValueChange = {
             inputTeamId = it
-            teamId(inputTeamId.toLong())
+            if (inputTeamId.isNotEmpty()) {
+                teamId(inputTeamId.toLong())
+            } else {
+                teamId(0L)
+            }
         }
     )
 

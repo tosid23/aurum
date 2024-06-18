@@ -1,34 +1,49 @@
 package com.fantasy.feature.team.domain.repo
 
-import com.fantasy.datastore.data.TeamDao
-import com.fantasy.datastore.data.TeamEntity
-import com.fantasy.datastore.data.toTeamEntity
+import com.fantasy.data.FplTeamInfoEntity
+import com.fantasy.data.toTeamEntity
+import com.fantasy.datastore.dao.ElementDao
+import com.fantasy.datastore.dao.FplTeamDao
 import com.fantasy.network.ApiService
 import com.fantasy.network.Result
 import com.fantasy.network.enqueueRoutine
-import timber.log.Timber
 import javax.inject.Inject
 
 internal class TeamRepoImpl @Inject constructor(
     private val apiService: ApiService,
-    private val teamDao: TeamDao
+    private val fplTeamDao: FplTeamDao,
+    private val elementDao: ElementDao
 ) : TeamRepo {
-    override suspend fun getFirstTeamFromDb(): TeamEntity? {
-        val teams = teamDao.getAllTeams()
+    override suspend fun isGeneralFplDataLoaded(): Boolean {
+        return elementDao.getCount() > 0
+    }
+
+    override suspend fun getAllFplDataFromApi(): Boolean {
+        return when (val data = enqueueRoutine { apiService.getGeneralData() }) {
+            is Result.Error -> false
+            is Result.Success -> {
+                val allData = data.data
+                allData.elements.let {
+                    elementDao.insertListData(it)
+                }
+                true
+            }
+        }
+    }
+
+    override suspend fun getFirstTeamFromDb(): FplTeamInfoEntity? {
+        val teams = fplTeamDao.getAllTeams()
         return teams?.firstOrNull()
     }
 
-    override suspend fun getTeamDataFromApi(teamId: Long): TeamEntity? {
-        when (val data = enqueueRoutine { apiService.getYourTeamData(teamId) }) {
-            is Result.Error -> {
-                Timber.e(data.errorMessage)
-                return null
-            }
+    override suspend fun getTeamDataFromApi(teamId: Long): FplTeamInfoEntity? {
+        when (val data = enqueueRoutine { apiService.getTeamBasicInfoById(teamId) }) {
+            is Result.Error -> return null
 
             is Result.Success -> {
                 val teamData = data.data
                 val teamEntity = teamData.toTeamEntity()
-                teamDao.insertData(teamEntity)
+                //fplTeamDao.insertData(teamEntity)
                 return teamEntity
             }
         }

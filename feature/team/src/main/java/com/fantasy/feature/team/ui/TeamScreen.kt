@@ -6,18 +6,26 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.CenterAlignedTopAppBar
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Scaffold
+import androidx.compose.material3.SnackbarHost
+import androidx.compose.material3.SnackbarHostState
 import androidx.compose.material3.Text
 import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.livedata.observeAsState
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
-import com.fantasy.designsystem.theme.md_black_1000
+import com.fantasy.designsystem.theme.theme.md_black_1000
+import com.fantasy.designsystem.theme.theme.md_blue_grey_900
+import com.fantasy.designsystem.theme.theme.md_grey_900
 import com.fantasy.designsystem.theme.ui.DotLoadingLayout
 import com.fantasy.feature.team.domain.TeamViewModel
 import com.fantasy.feature.team.domain.UiState
+import kotlinx.coroutines.launch
 
 
 @OptIn(ExperimentalMaterial3Api::class)
@@ -25,15 +33,38 @@ import com.fantasy.feature.team.domain.UiState
 internal fun TeamScreen(
     viewModel: TeamViewModel = hiltViewModel()
 ) {
+    val scope = rememberCoroutineScope()
+    val snackbarHostState = remember { SnackbarHostState() }
+
     val state by viewModel.uiState.collectAsStateWithLifecycle()
 
+    val messages by viewModel.messageLiveData.observeAsState()
+    messages?.getContentIfNotHandled()?.let {
+        scope.launch {
+            snackbarHostState.showSnackbar(it)
+        }
+    }
+
     Scaffold(
-        containerColor = md_black_1000,
+        snackbarHost = {
+            SnackbarHost(hostState = snackbarHostState)
+        },
+        containerColor = md_grey_900,
         topBar = {
             CenterAlignedTopAppBar(
-                title = { Text(text = "Aurum") },
+                title = {
+                    when (state) {
+                        is UiState.ShowTeam -> {
+                            Text(text = (state as UiState.ShowTeam).team.name)
+                        }
+
+                        else -> {
+                            Text(text = "Aurum")
+                        }
+                    }
+                },
                 colors = TopAppBarDefaults.topAppBarColors()
-                    .copy(containerColor = md_black_1000)
+                    .copy(containerColor = md_grey_900)
             )
         },
         floatingActionButton = {
@@ -59,7 +90,9 @@ internal fun TeamScreen(
                     }
                 }
 
-                is UiState.ShowTeam -> {}
+                is UiState.ShowTeam -> {
+                    ShowTeamLayout((state as UiState.ShowTeam).team)
+                }
             }
         }
     }

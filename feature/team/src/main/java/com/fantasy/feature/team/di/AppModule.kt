@@ -1,6 +1,7 @@
 package com.fantasy.feature.team.di
 
-import com.fantasy.datastore.data.TeamDao
+import com.fantasy.datastore.dao.ElementDao
+import com.fantasy.datastore.dao.FplTeamDao
 import com.fantasy.feature.team.domain.repo.TeamRepo
 import com.fantasy.feature.team.domain.repo.TeamRepoImpl
 import com.fantasy.network.ApiService
@@ -15,6 +16,7 @@ object AppModule {
     @Provides
     fun provideTeamRepo(
         apiService: ApiService,
-        teamDao: TeamDao
-    ): TeamRepo = TeamRepoImpl(apiService, teamDao)
+        fplTeamDao: FplTeamDao,
+        elementDao: ElementDao
+    ): TeamRepo = TeamRepoImpl(apiService, fplTeamDao, elementDao)
 }

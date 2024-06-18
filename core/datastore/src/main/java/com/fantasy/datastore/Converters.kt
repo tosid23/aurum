@@ -29,4 +29,13 @@ object Converters {
     fun intListToString(list: List<Int>?): String? {
         return gson.toJson(list)
     }
+
+//    @TypeConverter
+//    fun fromStringToPlayersList(json: String): List<Players>? {
+//        val listType = object : TypeToken<List<Players>?>() {}.type
+//        return gson.fromJson(json, listType)
+//    }
+//
+//    @TypeConverter
+//    fun fromPlayersListToString(data: List<Players>): String = gson.toJson(data)
 }

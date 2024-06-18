@@ -1,7 +1,9 @@
 package com.fantasy.feature.team.domain
 
+import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.fantasy.designsystem.theme.utils.SingleEvent
 import com.fantasy.feature.team.domain.repo.TeamRepo
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -16,10 +18,23 @@ internal class TeamViewModel @Inject constructor(
     var uiState = MutableStateFlow<UiState>(UiState.Empty)
         private set
 
+    internal var messageLiveData = MutableLiveData<SingleEvent<String>>()
+        private set
+
     //private val teamId: Long = 1983972
 
     init {
-        getCurrentTeamData()
+        getGeneralData()
+    }
+
+    private fun getGeneralData() {
+        viewModelScope.launch {
+            uiState.emit(UiState.Loading)
+            if (teamRepo.isGeneralFplDataLoaded().not()) {
+                teamRepo.getAllFplDataFromApi()
+            }
+            getCurrentTeamData()
+        }
     }
 
     private fun getCurrentTeamData() {
@@ -37,6 +52,11 @@ internal class TeamViewModel @Inject constructor(
             uiState.emit(UiState.Loading)
             teamRepo.getTeamDataFromApi(teamId)?.let { teamEntity ->
                 uiState.emit(UiState.ShowTeam(teamEntity))
+                messageLiveData.postValue(SingleEvent("Welcome ${teamEntity.firstName}"))
+                getCurrentTeamData()
+            } ?: run {
+                messageLiveData.postValue(SingleEvent("Could not find this team, please retry with another one"))
+                getCurrentTeamData()
             }
         }
     }

@@ -54,6 +54,11 @@ dependencies {
     implementation(libs.gson)
     implementation(libs.timber)
 
+    implementation(libs.room)
+    implementation(libs.room.ktx)
+    annotationProcessor(libs.room.compiler)
+    ksp(libs.room.compiler)
+
     implementation(libs.hilt)
     implementation(libs.hilt.navigation.compose)
     implementation(libs.androidx.navigation.common.ktx)

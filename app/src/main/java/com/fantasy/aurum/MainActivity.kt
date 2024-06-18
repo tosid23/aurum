@@ -5,7 +5,7 @@ import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
 import com.fantasy.aurum.navigation.NavHost
-import com.fantasy.designsystem.theme.AppTheme
+import com.fantasy.designsystem.theme.theme.AppTheme
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint

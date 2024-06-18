@@ -1,4 +1,4 @@
-package com.fantasy.designsystem.theme
+package com.fantasy.designsystem.theme.theme
 
 import androidx.compose.ui.graphics.Color
 

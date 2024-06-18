@@ -1,4 +1,4 @@
-package com.fantasy.designsystem.theme
+package com.fantasy.designsystem.theme.theme
 
 import androidx.compose.foundation.isSystemInDarkTheme
 import androidx.compose.material.ripple.RippleAlpha
