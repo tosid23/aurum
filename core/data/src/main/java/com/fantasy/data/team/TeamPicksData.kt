@@ -7,12 +7,12 @@ import com.google.gson.annotations.SerializedName
 @Keep
 data class TeamPicksData(
     @SerializedName("chips") val chips: List<Any>,
-    @SerializedName("picks") val picks: List<TeamPlayers>,
+    @SerializedName("picks") val picks: List<TeamPlayer>,
     @SerializedName("transfers") val transfers: Transfers
 )
 
 @Keep
-data class TeamPlayers(
+data class TeamPlayer(
     @SerializedName("element") val element: Int,
     @SerializedName("is_captain") val isCaptain: Boolean,
     @SerializedName("is_vice_captain") val isViceCaptain: Boolean,

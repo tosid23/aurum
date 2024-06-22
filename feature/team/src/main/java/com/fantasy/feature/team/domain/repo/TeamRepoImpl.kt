@@ -1,11 +1,12 @@
 package com.fantasy.feature.team.domain.repo
 
-import com.fantasy.data.team.TeamInfoEntity
+import com.fantasy.data.team.Squad
+import com.fantasy.data.team.addSquadPlayer
 import com.fantasy.data.team.toTeamEntity
+import com.fantasy.datastore.dao.ClubDao
 import com.fantasy.datastore.dao.ElementDao
 import com.fantasy.datastore.dao.ElementTypeDao
 import com.fantasy.datastore.dao.TeamDao
-import com.fantasy.datastore.dao.ClubDao
 import com.fantasy.network.ApiService
 import com.fantasy.network.Result
 import com.fantasy.network.enqueueRoutine
@@ -22,6 +23,8 @@ internal class TeamRepoImpl @Inject constructor(
         return elementDao.getCount() > 0
     }
 
+    override suspend fun getFirstTeamIdFromDb() = teamDao.getAllTeams()?.firstOrNull()?.id
+
     override suspend fun getAllFplDataFromApi(): Boolean {
         return when (val data = enqueueRoutine { apiService.getGeneralData() }) {
             is Result.Error -> false
@@ -35,20 +38,38 @@ internal class TeamRepoImpl @Inject constructor(
         }
     }
 
-    override suspend fun getFirstTeamFromDb(): TeamInfoEntity? {
-        val teams = teamDao.getAllTeams()
-        return teams?.firstOrNull()
-    }
+    override suspend fun getTeamFromDb(teamId: Long) = teamDao.getTeamById(teamId)
 
-    override suspend fun getTeamDataFromApi(teamId: Long): TeamInfoEntity? {
-        when (val data = enqueueRoutine { apiService.getTeamBasicInfoById(teamId) }) {
-            is Result.Error -> return null
+    override suspend fun getTeamDataFromApi(teamId: Long): Boolean {
+        return when (val data = enqueueRoutine { apiService.getTeamBasicInfoById(teamId) }) {
+            is Result.Error -> false
 
             is Result.Success -> {
                 val teamData = data.data
                 val teamEntity = teamData.toTeamEntity()
-                //fplTeamDao.insertData(teamEntity)
-                return teamEntity
+                teamDao.insertData(teamEntity)
+                getTeamElementsInfoFromApi(teamId)
+                return true
+            }
+        }
+    }
+
+    override suspend fun getTeamElementsInfoFromApi(teamId: Long): Boolean {
+        return when (val data = enqueueRoutine { apiService.getTeamElementsInfoById(teamId) }) {
+            is Result.Error -> {
+                false
+            }
+
+            is Result.Success -> {
+                val currentPicks = data.data.picks
+                val currentSquad = ArrayList<Squad>()
+                currentPicks.forEach { pick ->
+                    val element = elementDao.getElementDataById(pick.element.toLong())
+                    val squadPlayer = addSquadPlayer(pick, element)
+                    currentSquad.add(squadPlayer)
+                }
+                teamDao.updateCurrentSquad(teamId, currentSquad)
+                true
             }
         }
     }

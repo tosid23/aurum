@@ -1,6 +1,7 @@
 package com.fantasy.datastore
 
 import androidx.room.TypeConverter
+import com.fantasy.data.team.Squad
 import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken
 
@@ -30,12 +31,12 @@ object Converters {
         return gson.toJson(list)
     }
 
-//    @TypeConverter
-//    fun fromStringToPlayersList(json: String): List<Players>? {
-//        val listType = object : TypeToken<List<Players>?>() {}.type
-//        return gson.fromJson(json, listType)
-//    }
-//
-//    @TypeConverter
-//    fun fromPlayersListToString(data: List<Players>): String = gson.toJson(data)
+    @TypeConverter
+    fun fromStringToSquadList(json: String): List<Squad>? {
+        val listType = object : TypeToken<List<Squad>?>() {}.type
+        return gson.fromJson(json, listType)
+    }
+
+    @TypeConverter
+    fun fromSquadListToString(data: List<Squad>): String = gson.toJson(data)
 }

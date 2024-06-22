@@ -27,6 +27,7 @@ internal class TeamViewModel @Inject constructor(
 
     init {
         getGeneralData()
+        getFirstTeamFromDb()
     }
 
     private fun getGeneralData() {
@@ -35,14 +36,25 @@ internal class TeamViewModel @Inject constructor(
             if (teamRepo.isGeneralFplDataLoaded().not()) {
                 teamRepo.getAllFplDataFromApi()
             }
-            getCurrentTeamData()
         }
     }
 
-    private fun getCurrentTeamData() {
+
+    private fun getFirstTeamFromDb() {
         viewModelScope.launch {
-            teamRepo.getFirstTeamFromDb()?.let { teamEntity ->
+            teamRepo.getFirstTeamIdFromDb()?.let { id ->
+                getCurrentTeamData(id)
+            } ?: run {
+                uiState.emit(UiState.AddTeam)
+            }
+        }
+    }
+
+    private fun getCurrentTeamData(teamId: Long) {
+        viewModelScope.launch {
+            teamRepo.getTeamFromDb(teamId)?.let { teamEntity ->
                 uiState.emit(UiState.ShowTeam(teamEntity))
+                teamRepo.getTeamElementsInfoFromApi(teamId)
             } ?: run {
                 uiState.emit(UiState.AddTeam)
             }
@@ -52,13 +64,12 @@ internal class TeamViewModel @Inject constructor(
     internal fun getTeamDataFromApi(teamId: Long) {
         viewModelScope.launch {
             uiState.emit(UiState.Loading)
-            teamRepo.getTeamDataFromApi(teamId)?.let { teamEntity ->
-                uiState.emit(UiState.ShowTeam(teamEntity))
-                messageLiveData.postValue(SingleEvent("Welcome ${teamEntity.firstName}"))
-                getCurrentTeamData()
-            } ?: run {
-                messageLiveData.postValue(SingleEvent("Could not find this team, please retry with another one"))
-                getCurrentTeamData()
+            teamRepo.getTeamDataFromApi(teamId).let { flag ->
+                if (flag) {
+                    getCurrentTeamData(teamId)
+                } else {
+                    messageLiveData.postValue(SingleEvent("Could not find this team, please retry with another one"))
+                }
             }
         }
     }

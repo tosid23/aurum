@@ -8,6 +8,9 @@ import com.fantasy.data.element.ElementEntity
 
 @Dao
 interface ElementDao {
+    @Query("SELECT * FROM element_table where id = :element")
+    suspend fun getElementDataById(element: Long): ElementEntity
+
     @Query("SELECT COUNT(*) FROM element_table")
     suspend fun getCount(): Int
 
